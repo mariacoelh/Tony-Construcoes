@@ -18,11 +18,17 @@
   .lista-consultores{ margin-top:26px; display:flex; flex-direction:column; gap:14px }
 
   .consultor{
-    background:#fff7f0; border-radius:10px; padding:14px 18px; position:relative; display:flex; align-items:center; gap:8px; box-shadow: none; transition: transform .14s ease, box-shadow .14s ease;
+    background:#fff7f0; border-radius:10px; padding:14px 18px; position:relative; display:flex; align-items:center; gap:8px; 
+    box-shadow: none; border: 1.5px solid transparent;
+    transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease, background-color .14s ease;
   }
   .consultor:hover{
-    transform:translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    border-color: #ff7f00; /* linha fina laranja */
+    box-shadow: 
+      inset 0 0 10px rgba(255, 127, 0, 0.3), /* sombra interna suave laranja */
+      0 4px 12px rgba(255, 127, 0, 0.4);    /* sombra externa laranja */
+    background-color: #fff3e0; /* fundo clarinho laranja */
   }
 
   .main-link{ flex:1; text-decoration:none; color:inherit; display:flex; align-items:center; justify-content:center; position:relative; padding:6px 28px; }
