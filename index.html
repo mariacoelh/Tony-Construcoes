@@ -1,204 +1,183 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Escolha seu consultor</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Linkr Clone</title>
 <style>
-  :root{ --maxw:420px; }
-  body{
-    font-family: Inter, Arial, sans-serif;
-    margin:0; padding:0; display:flex; justify-content:center; background:#fff; color:#222;
-  }
-  .container{ width:100%; max-width:var(--maxw); padding:40px 20px; }
-  header{ text-align:center; margin-bottom:22px }
-  header img{ max-width:120px; display:block; margin:0 auto }
-  h1{ font-weight:500; font-size:18px; margin:18px 0 0 }
-
-  .lista-consultores{ margin-top:26px; display:flex; flex-direction:column; gap:14px }
-
-  .consultor{
-    background:#fff7f0; border-radius:10px; padding:14px 18px; position:relative; display:flex; align-items:center; gap:8px; box-shadow: none; transition: transform .14s ease, box-shadow .14s ease;
-  }
-  .consultor:hover{ transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.06); }
-
-  .main-link{ flex:1; text-decoration:none; color:inherit; display:flex; align-items:center; justify-content:center; position:relative; padding:6px 28px; }
-
-  .whatsapp-icon{ position:absolute; left:12px; width:22px; height:22px; opacity:0; transition:opacity .14s ease; }
-  .consultor:hover .whatsapp-icon{ opacity:1 }
-
-  /* menu 3 pontinhos */
-  .menu-btn{ position:absolute; right:10px; top:50%; transform:translateY(-50%); background:transparent; border:none; cursor:pointer; padding:6px; font-size:18px; color:#666; opacity:0; transition:opacity .12s ease; }
-  .consultor:hover .menu-btn{ opacity:1 }
-
-  /* modal */
-  .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); z-index:1200; }
-  .modal.show{ display:flex }
-  .modal-box{ width:92%; max-width:420px; background:#fff; border-radius:12px; padding:18px; box-shadow:0 20px 60px rgba(0,0,0,0.25); }
-  .modal-header{ display:flex; align-items:center; justify-content:space-between; }
-  .modal-header h3{ margin:0; font-size:16px }
-  .close-btn{ background:transparent; border:none; font-size:20px; cursor:pointer }
-  .link-row{ display:flex; gap:8px; margin:12px 0 }
-  .link-row input{ flex:1; border:1px solid #e6e6e6; padding:8px 10px; border-radius:8px; font-size:14px }
-  .btn-copy{ padding:8px 10px; border-radius:8px; border:1px solid #ddd; background:#f7f7f7; cursor:pointer }
-
-  .share-icons{ display:flex; gap:10px; margin:10px 0 }
-  .share-icons a{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; text-decoration:none; border:1px solid #eee }
-
-  .qr-wrap{ text-align:center; margin-top:12px }
-  .qr-wrap img{ width:180px; max-width:100%; border-radius:8px; }
-  .qr-download{ display:inline-block; margin-top:10px; padding:8px 12px; border-radius:8px; border:1px solid #7b61ff; color:#7b61ff; text-decoration:none }
-
-  /* responsive */
-  @media (max-width:480px){ .container{ padding:26px 14px } .menu-btn{ right:8px } }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #fafafa;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    .profile {
+        margin-top: 30px;
+    }
+    .profile img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+    }
+    .name {
+        font-size: 1.4rem;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    .bio {
+        font-size: 0.95rem;
+        color: #666;
+        margin-bottom: 20px;
+    }
+    .links a {
+        display: block;
+        background: white;
+        color: black;
+        padding: 12px 20px;
+        margin: 10px auto;
+        max-width: 300px;
+        border-radius: 8px;
+        text-decoration: none;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: box-shadow 0.3s;
+    }
+    .links a:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .social-icons {
+        margin-top: 20px;
+    }
+    .social-icons img {
+        width: 30px;
+        margin: 0 8px;
+        cursor: pointer;
+    }
+    .menu {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        cursor: pointer;
+    }
+    .menu span {
+        display: block;
+        width: 5px;
+        height: 5px;
+        background: black;
+        margin: 3px;
+        border-radius: 50%;
+    }
+    /* Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        max-width: 300px;
+        text-align: center;
+    }
+    .modal-content input {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .modal-content img {
+        margin-top: 10px;
+        width: 150px;
+    }
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    button {
+        background: #25d366;
+        border: none;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #1ebe5d;
+    }
 </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <img src="sua-logo.png" alt="Logo Empresa">
-      <h1>Escolha o seu consultor</h1>
-    </header>
 
-    <div class="lista-consultores">
+<div class="menu" onclick="openModal()">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
 
-      <!-- Exemplo de item: preencha os data-* -->
-      <div class="consultor" data-link="https://link-da-sua-pagina" data-whatsapp="5511999999999" data-instagram="seu-instagram" data-name="Tire suas dúvidas pelo WhatsApp!">
-        <a class="main-link" href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon" alt="WhatsApp">
-          Tire suas dúvidas pelo WhatsApp!
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
+<div class="profile">
+    <img src="https://via.placeholder.com/120" alt="Foto de Perfil">
+    <div class="name">Minha Loja</div>
+    <div class="bio">Produtos incríveis com entrega rápida!</div>
+</div>
 
-      <div class="consultor" data-link="https://link-da-sua-pagina/consultora-camila" data-whatsapp="5511988887777" data-instagram="consultoracamilainsta" data-name="Consultora Camila">
-        <a class="main-link" href="https://wa.me/5511988887777" target="_blank" rel="noopener noreferrer">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon" alt="WhatsApp">
-          Consultora Camila
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
+<div class="links">
+    <a href="https://exemplo.com">🛒 Comprar Agora</a>
+    <a href="https://exemplo.com">📦 Acompanhar Pedido</a>
+</div>
 
-      <div class="consultor" data-link="https://link-da-sua-pagina/consultor-leonardo" data-whatsapp="5511977776666" data-instagram="consultorleonardo" data-name="Consultor Leonardo">
-        <a class="main-link" href="https://wa.me/5511977776666" target="_blank" rel="noopener noreferrer">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon" alt="WhatsApp">
-          Consultor Leonardo
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
+<div class="social-icons">
+    <a href="https://wa.me/5511999999999" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+    <a href="https://instagram.com" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+</div>
 
-      <div class="consultor" data-link="https://link-da-sua-pagina/consultor-mascilon" data-whatsapp="5511966665555" data-instagram="consultormascilon" data-name="Consultor Mascilon">
-        <a class="main-link" href="https://wa.me/5511966665555" target="_blank" rel="noopener noreferrer">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon" alt="WhatsApp">
-          Consultor Mascilon
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
-
-      <div class="consultor" data-link="https://link-da-sua-pagina/consultor-lima" data-whatsapp="5511955554444" data-instagram="consultorlima" data-name="Consultor Lima">
-        <a class="main-link" href="https://wa.me/5511955554444" target="_blank" rel="noopener noreferrer">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon" alt="WhatsApp">
-          Consultor Lima
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
-
-      <div class="consultor" data-link="https://link-da-sua-pagina/consultor-geice" data-whatsapp="5511944443333" data-instagram="consultorgeice" data-name="Consultor Geice">
-        <a class="main-link" href="https://wa.me/5511944443333" target="_blank" rel="noopener noreferrer">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon" alt="WhatsApp">
-          Consultor Geice
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="shareModal" class="modal" aria-hidden="true">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-header">
-        <h3 id="modalTitle">Compartilhe este link</h3>
-        <button class="close-btn" id="closeModal" aria-label="Fechar">✕</button>
-      </div>
-      <p id="modalName" style="margin:8px 0 0; color:#666; font-size:14px"></p>
-
-      <div class="link-row">
-        <input id="modalLinkInput" type="text" readonly value="">
-        <button class="btn-copy" id="copyBtn">Copiar</button>
-      </div>
-
-      <div class="share-icons">
-        <a id="modalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" title="Abrir WhatsApp">WA</a>
-        <a id="modalInsta" href="#" target="_blank" rel="noopener noreferrer" title="Instagram">IG</a>
-      </div>
-
-      <div class="qr-wrap">
-        <img id="modalQrImg" src="" alt="QR code">
-        <div>
-          <a id="downloadQr" class="qr-download" href="#" download="qrcode.png">Baixar código QR</a>
+<div class="modal" id="myModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Compartilhar</h3>
+        <input type="text" id="shortLink" value="https://meulink.com" readonly>
+        <button onclick="copyLink()">Copiar</button>
+        <img id="qrCode" src="" alt="QR Code">
+        <div style="margin-top:10px;">
+            <a href="https://wa.me/5511999999999" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30">
+            </a>
+            <a href="https://instagram.com" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="30">
+            </a>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
 <script>
-  // Abrir modal com dados do item
-  function openShareModal({ link, whatsapp, instagram, name }){
-    const modal = document.getElementById('shareModal');
-    document.getElementById('modalLinkInput').value = link;
-    document.getElementById('modalName').textContent = name || '';
-
-    // Whatsapp link
-    const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g,'') : '#';
-    document.getElementById('modalWhatsapp').href = waHref;
-
-    // Instagram link
-    document.getElementById('modalInsta').href = instagram ? 'https://instagram.com/' + instagram.replace(/^@/,'') : '#';
-
-    // QR code via Google Chart API
-    const qrSrc = 'https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=' + encodeURIComponent(link);
-    const qrImg = document.getElementById('modalQrImg');
-    qrImg.src = qrSrc;
-    document.getElementById('downloadQr').href = qrSrc;
-
-    modal.classList.add('show');
-    modal.setAttribute('aria-hidden','false');
-  }
-
-  function closeShareModal(){
-    const modal = document.getElementById('shareModal');
-    modal.classList.remove('show');
-    modal.setAttribute('aria-hidden','true');
-  }
-
-  // copiar para clipboard
-  document.getElementById('copyBtn').addEventListener('click', async function(){
-    const val = document.getElementById('modalLinkInput').value;
-    try{ await navigator.clipboard.writeText(val); this.textContent = 'Copiado'; setTimeout(()=> this.textContent = 'Copiar',1200); }
-    catch(e){ alert('Não foi possível copiar.'); }
-  });
-
-  // fechar modal
-  document.getElementById('closeModal').addEventListener('click', closeShareModal);
-  document.getElementById('shareModal').addEventListener('click', function(e){ if(e.target === this) closeShareModal(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeShareModal(); });
-
-  // ligar os botões de menu
-  document.querySelectorAll('.menu-btn').forEach(btn => {
-    btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      const item = this.closest('.consultor');
-      const link = item.dataset.link || window.location.href;
-      const whatsapp = item.dataset.whatsapp || '';
-      const instagram = item.dataset.instagram || '';
-      const name = item.dataset.name || '';
-      openShareModal({ link, whatsapp, instagram, name });
-    });
-  });
-
-  // opcional: ao clicar no texto principal (main-link) abre o WhatsApp (já configurado no href)
-
+    function openModal() {
+        document.getElementById('myModal').style.display = 'flex';
+        let link = document.getElementById('shortLink').value;
+        document.getElementById('qrCode').src = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(link)}`;
+    }
+    function closeModal() {
+        document.getElementById('myModal').style.display = 'none';
+    }
+    function copyLink() {
+        let copyText = document.getElementById("shortLink");
+        copyText.select();
+        document.execCommand("copy");
+        alert("Link copiado!");
+    }
+    window.onclick = function(event) {
+        let modal = document.getElementById('myModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
+
 </body>
 </html>
