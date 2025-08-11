@@ -29,21 +29,24 @@
   transition: all 0.25s ease;
 }
 .consultor:hover {
-  transform: translateY(-2px);
   background-color: rgba(252, 75, 8, 0.15);
   box-shadow: 0 0 0 2px #FC4B08, 0 0 18px #FC4B08;
+  transform: translateY(-2px);
+  transition: all 0.25s ease;
 }
 
 
 .main-link {
-  flex: 1;
-  text-decoration: none;
-  color: #fff;
-  font-size: 14px;
-  padding: 16px 24px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  padding: 18px 48px; /* aumenta o comprimento do botão */
+  position: relative;
+  border-radius: 10px;
 }
   
 .whatsapp-icon {
@@ -53,8 +56,16 @@
   height: 22px;
   opacity: 0.8;
 }
-  .consultor:hover .whatsapp-icon{ opacity:1 }
-
+.consultor .whatsapp-icon {
+  display: none;
+}
+.consultor:first-child .whatsapp-icon {
+  display: block;
+  position: absolute;
+  left: 18px;
+  width: 20px;
+  height: 20px;
+} 
   /* menu 3 pontinhos */
 .menu-btn {
   position: absolute;
@@ -68,7 +79,7 @@
   font-size: 16px;
   color: #fff;
   border-radius: 50%;
-  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
 
   .consultor:hover .menu-btn{ opacity:1 }
@@ -105,8 +116,8 @@
     <div class="lista-consultores">
 
       <!-- Exemplo de item: preencha os data-* -->
-      <div class="consultor" data-link="https://link-da-sua-pagina" data-whatsapp="5511999999999" data-instagram="seu-instagram" data-name="Tire suas dúvidas pelo WhatsApp!">
-        <a class="main-link" href="https://wa.me/5511999999999" target="_blank" rel="noopener noreferrer">
+      <div class="consultor">
+        <a class="main-link" href="https://wa.me/5511999999999" target="_blank">
           <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="whatsapp-icon" alt="WhatsApp">
           Tire suas dúvidas pelo WhatsApp!
         </a>
