@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Meu Linkr Clone</title>
 <style>
     body {
@@ -30,21 +30,62 @@
         color: #666;
         margin-bottom: 20px;
     }
-    .links a {
+
+    /* Removido o estilo anterior dos links para evitar conflito */
+    /* Agora os links usarão a classe link-button */
+
+    /* Botões principais */
+    .link-button {
+      background-color: white;
+      border-radius: 12px;
+      padding: 12px 20px;
+      margin: 10px auto; /* centralizado */
+      max-width: 300px;
+      display: block;
+      color: black;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .link-button:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Botão três pontinhos */
+    .menu-button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .menu-button:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transform: translateY(-2px);
+    }
+    .menu-button span {
         display: block;
-        background: white;
-        color: black;
-        padding: 12px 20px;
-        margin: 10px auto;
-        max-width: 300px;
-        border-radius: 8px;
-        text-decoration: none;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        transition: box-shadow 0.3s;
+        width: 5px;
+        height: 5px;
+        background: black;
+        margin: 3px 0;
+        border-radius: 50%;
     }
-    .links a:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+
     .social-icons {
         margin-top: 20px;
     }
@@ -53,20 +94,7 @@
         margin: 0 8px;
         cursor: pointer;
     }
-    .menu {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        cursor: pointer;
-    }
-    .menu span {
-        display: block;
-        width: 5px;
-        height: 5px;
-        background: black;
-        margin: 3px;
-        border-radius: 50%;
-    }
+
     /* Modal */
     .modal {
         display: none;
@@ -82,6 +110,7 @@
         border-radius: 12px;
         max-width: 300px;
         text-align: center;
+        position: relative;
     }
     .modal-content input {
         width: 100%;
@@ -116,41 +145,42 @@
 </head>
 <body>
 
-<div class="menu" onclick="openModal()">
+<!-- Troquei a div por button para poder aplicar os estilos de botão -->
+<button class="menu-button" onclick="openModal()" aria-label="Abrir menu">
     <span></span>
     <span></span>
     <span></span>
-</div>
+</button>
 
 <div class="profile">
-    <img src="https://via.placeholder.com/120" alt="Foto de Perfil">
+    <img src="https://via.placeholder.com/120" alt="Foto de Perfil" />
     <div class="name">Minha Loja</div>
     <div class="bio">Produtos incríveis com entrega rápida!</div>
 </div>
 
 <div class="links">
-    <a href="https://exemplo.com">🛒 Comprar Agora</a>
-    <a href="https://exemplo.com">📦 Acompanhar Pedido</a>
+    <a href="https://exemplo.com" class="link-button">🛒 Comprar Agora</a>
+    <a href="https://exemplo.com" class="link-button">📦 Acompanhar Pedido</a>
 </div>
 
 <div class="social-icons">
-    <a href="https://wa.me/5511999999999" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
-    <a href="https://instagram.com" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+    <a href="https://wa.me/5511999999999" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" /></a>
+    <a href="https://instagram.com" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" /></a>
 </div>
 
 <div class="modal" id="myModal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         <h3>Compartilhar</h3>
-        <input type="text" id="shortLink" value="https://meulink.com" readonly>
+        <input type="text" id="shortLink" value="https://meulink.com" readonly />
         <button onclick="copyLink()">Copiar</button>
-        <img id="qrCode" src="" alt="QR Code">
+        <img id="qrCode" src="" alt="QR Code" />
         <div style="margin-top:10px;">
             <a href="https://wa.me/5511999999999" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30" />
             </a>
             <a href="https://instagram.com" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="30">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="30" />
             </a>
         </div>
     </div>
