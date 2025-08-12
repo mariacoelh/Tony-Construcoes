@@ -47,7 +47,26 @@
   position: relative;
   border-radius: 10px;
 }
-  
+.instagram-only {
+  text-align: center;
+  margin-top: 20px; /* Espaço entre os cards e o botão */
+}
+
+.instagram-only a {
+  display: inline-block;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.instagram-only a:hover {
+  background-color: rgba(227, 42, 115, 0.2); /* tom rosado suave */
+}
+
+.instagram-icon {
+  width: 40px;
+  height: auto;
+}
 .whatsapp-icon {
   position: absolute;
   left: 16px;
@@ -66,23 +85,6 @@
   height: 20px;
 } 
 
-  .instagram-btn {
-  position: absolute;
-  right: 48px; /* Ajustar conforme necessário para alinhamento */
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.instagram-icon {
-  width: 24px;  /* Tamanho ajustável */
-  height: 24px;
-  opacity: 0.8;
-  transition: opacity 0.2s;
-}
-
-.instagram-icon:hover {
-  opacity: 1;
-}
   /* menu 3 pontinhos */
 .menu-btn {
   position: absolute;
@@ -138,11 +140,8 @@
          <img src="https://cdnl.iconscout.com/lottie/premium/thumb/whatsapp-logo-12894798-10490201.gif" class="whatsapp-icon" alt="WhatsApp GIF">
           Tire suas dúvidas pelo WhatsApp!
         </a>
-  <a class="instagram-btn" href="https://www.instagram.com/tony_construcoes?igsh=NjQyNTZ4MXdwemds" target="_blank" rel="noopener noreferrer">
-    <img src="CAMINHO_DO_ICONE_INSTAGRAM.png" class="instagram-icon" alt="Instagram">
-  </a>
-  <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-</div>
+        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
+      </div>
 
 
       <div class="consultor" data-link="https://link-da-sua-pagina/consultora-camila" data-whatsapp="5511988887777" data-instagram="consultoracamilainsta" data-name="Consultora Camila">
@@ -151,7 +150,12 @@
         </a>
         <button class="menu-btn" aria-label="Abrir menu">⋯</button>
       </div>
-      
+
+      <div class="instagram-only">
+        <a href="https://static.vecteezy.com/system/resources/thumbnails/015/521/650/original/3d-instagram-square-icon-animation-transparent-background-free-free-video.jpg" target="_blank" rel="noopener noreferrer">
+          <img src="images/instagram-icon.png" alt="Instagram" class="instagram-icon">
+        </a>
+      </div>
     </div>
   </div>
 
