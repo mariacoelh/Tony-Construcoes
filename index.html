@@ -47,25 +47,19 @@
   position: relative;
   border-radius: 10px;
 }
-.instagram-only {
-  text-align: center;
-  margin-top: 20px; /* Espaço entre os cards e o botão */
+.consultor .instagram-icon {
+  position: absolute;
+  left: 18px;
+  width: 20px;
+  height: 20px;
 }
 
-.instagram-only a {
-  display: inline-block;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background 0.3s;
+.consultor:first-child .whatsapp-icon {
+  display: block;
 }
 
-.instagram-only a:hover {
-  background-color: rgba(227, 42, 115, 0.2); /* tom rosado suave */
-}
-
-.instagram-icon {
-  width: 40px;
-  height: auto;
+.consultor:nth-child(2) .instagram-icon {
+  display: block;
 }
 .whatsapp-icon {
   position: absolute;
@@ -151,10 +145,10 @@
         <button class="menu-btn" aria-label="Abrir menu">⋯</button>
       </div>
 
-      <div class="instagram-only">
-        <a class="main-link" href="https://instagram.com/consultoracamilainsta" target="_blank" 
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/120px-Instagram_logo_2016.svg.png" alt="Instagram" class="instagram-icon" />
-           Venha ver nosso Instagram
+      <div class="consultor">
+        <a class="main-link" href="https://www.instagram.com/tony_construcoes" target="_blank">
+          <img src="https://pixabay.com/gifs/instagram-logo-social-network-pink-11185/" class="whatsapp-icon" alt="Instagram GIF">
+          Acesse nosso Instagram
         </a>
         <button class="menu-btn" aria-label="Abrir menu">⋯</button>
       </div>
