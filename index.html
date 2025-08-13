@@ -5,250 +5,105 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Escolha seu consultor</title>
 <style>
-  :root{ --maxw:420px; }
-  body{
+  :root { --maxw: 420px; }
+  body {
     font-family: Inter, Arial, sans-serif;
-    margin:0; padding:0; display:flex; justify-content:center; background:#000; color:#fff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background: #000;
+    color: #fff;
   }
-  .container{ width:100%; max-width:var(--maxw); padding:40px 20px; }
-  header{ text-align:center; margin-bottom:22px }
-  header img{ max-width:120px; display:block; margin:0 auto }
-  h1{ font-weight:500; font-size:18px; margin:18px 0 0 }
+  .container { width: 100%; max-width: var(--maxw); padding: 40px 20px; }
+  header { text-align: center; margin-bottom: 22px }
+  header img { max-width: 120px; display: block; margin: 0 auto }
+  h1 { font-weight: 500; font-size: 18px; margin: 18px 0 0 }
 
-  .lista-consultores{ margin-top:26px; display:flex; flex-direction:column; gap:14px }
+  .lista-consultores {
+    margin-top: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
 
-.consultor {
-  background: transparent;
-  border-radius: 10px;
-  padding: 0; /* Removido o padding externo */
-  width: 100%; /* Largura máxima */
-  position: relative;
-  display: flex;
-  align-items: stretch; /* Ocupa altura igual entre filhos */
-  box-shadow: none;
-  transition: all 0.25s ease;
-}
-.consultor:hover {
-  background-color: rgba(252, 75, 8, 0.15);
-  box-shadow: 0 0 0 2px #FC4B08, 0 0 18px #FC4B08;
-  transform: translateY(-2px);
-  transition: all 0.25s ease;
-}
+  .consultor {
+    background: transparent;
+    border-radius: 10px;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    box-shadow: none;
+    transition: all 0.25s ease;
+  }
+  .consultor:hover {
+    background-color: rgba(252, 75, 8, 0.15);
+    box-shadow: 0 0 0 2px #FC4B08, 0 0 18px #FC4B08;
+    transform: translateY(-2px);
+    transition: all 0.25s ease;
+  }
 
-.main-link {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: #fff;
-  font-size: 14px;
-  padding: 18px 48px; /* aumenta o comprimento do botão */
-  position: relative;
-  border-radius: 10px;
-}  
-  
-.consultor .instagram-icon {
-  position: absolute;
-  left: 18px;  /* mesmo alinhamento do WhatsApp */
-  width: 20px;
-  height: 20px;
-  opacity: 0.8;
-}
+  .main-link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 18px 48px;
+    position: relative;
+    border-radius: 10px;
+  }
 
-.consultor .whatsapp-icon {
-  display: none;
-}
-
-.consultor:first-child .instagram-icon {
+  .whatsapp-icon {
     display: block;
-  position: absolute;
-  left: 18px;
-  width: 20px;
-  height: 20px;
-} 
-
-.whatsapp-icon {
-  position: absolute;
-  left: 16px;
-  width: 22px;
-  height: 22px;
-  opacity: 0.8;
-}
-.consultor .whatsapp-icon {
-  display: block;
-  position: absolute;
-  left: 18px;
-  width: 20px;
-  height: 20px;
-  opacity: 0.8;
-}
-
-  /* menu 3 pontinhos */
-.menu-btn {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #1f1f1f;
-  border: none;
-  cursor: pointer;
-  padding: 6px 10px;
-  font-size: 16px;
-  color: #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-}
-
-.consultor:hover .menu-btn{ opacity:1 }
-
-  /* modal */
-  .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.45); z-index:1200; }
-  .modal.show{ display:flex }
-  .modal-box{ width:92%; max-width:420px; background:#fff; border-radius:12px; padding:18px; box-shadow:0 20px 60px rgba(0,0,0,0.25); }
-  .modal-header{ display:flex; align-items:center; justify-content:space-between; }
-  .modal-header h3{ margin:0; font-size:16px; color:#222; }
-  .close-btn{ background:transparent; border:none; font-size:20px; cursor:pointer; color:#222; }
-  .link-row{ display:flex; gap:8px; margin:12px 0 }
-  .link-row input{ flex:1; border:1px solid #e6e6e6; padding:8px 10px; border-radius:8px; font-size:14px }
-  .btn-copy{ padding:8px 10px; border-radius:8px; border:1px solid #ddd; background:#f7f7f7; cursor:pointer }
-
-  .share-icons{ display:flex; gap:10px; margin:10px 0 }
-  .share-icons a{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; text-decoration:none; border:1px solid #eee; color:#222; }
-
-  .qr-wrap{ text-align:center; margin-top:12px }
-  .qr-wrap img{ width:180px; max-width:100%; border-radius:8px; }
-  .qr-download{ display:inline-block; margin-top:10px; padding:8px 12px; border-radius:8px; border:1px solid #7b61ff; color:#7b61ff; text-decoration:none }
-
-  /* responsive */
-  @media (max-width:480px){ .container{ padding:26px 14px } .menu-btn{ right:8px } }
-</style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <img src="sua-logo.png" alt="Logo Empresa">
-      <h1>Escolha o seu consultor</h1>
-    </header>
-
-    <div class="lista-consultores">
-
-      <!-- Exemplo de item: preencha os data-* -->
-      <div class="consultor">
-        <a class="main-link" href="https://wa.me/5588981219629" target="_blank">
-         <img src="https://cdnl.iconscout.com/lottie/premium/thumb/whatsapp-logo-12894798-10490201.gif" class="whatsapp-icon" alt="WhatsApp GIF">
-          Tire suas dúvidas pelo WhatsApp!
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
-
-
-      <div class="consultor">
-        <a class="main-link" href="https://wa.me/5588998436316" target="_blank" rel="noopener noreferrer">
-          <img src="https://cdnl.iconscout.com/lottie/premium/thumb/whatsapp-logo-12894798-10490201.gif" class="whatsapp-icon" alt="WhatsApp GIF">
-          Consultor Adriano
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
-
-      <div class="consultor">
-        <a class="main-link" href="https://www.instagram.com/tony_construcoes" target="_blank" rel="noopener noreferrer">
-          <img src="https://static.vecteezy.com/system/resources/previews/042/127/166/non_2x/instagram-logo-on-square-style-with-transparent-background-free-png.png" class="instagram-icon" alt="Instagram">
-          Acesse nosso Instagram
-        </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
-      </div>
-
-
-      
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="shareModal" class="modal" aria-hidden="true">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-header">
-        <h3 id="modalTitle">Compartilhe este link</h3>
-        <button class="close-btn" id="closeModal" aria-label="Fechar">✕</button>
-      </div>
-      <p id="modalName" style="margin:8px 0 0; color:#666; font-size:14px"></p>
-
-      <div class="link-row">
-        <input id="modalLinkInput" type="text" readonly value="">
-        <button class="btn-copy" id="copyBtn">Copiar</button>
-      </div>
-
-      <div class="share-icons">
-        <a id="modalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" title="Abrir WhatsApp">WA</a>
-        <a id="modalInsta" href="#" target="_blank" rel="noopener noreferrer" title="Instagram">IG</a>
-      </div>
-
-      <div class="qr-wrap">
-        <img id="modalQrImg" src="" alt="QR code">
-        <div>
-          <a id="downloadQr" class="qr-download" href="#" download="qrcode.png">Baixar código QR</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<script>
-  // Abrir modal com dados do item
-  function openShareModal({ link, whatsapp, instagram, name }){
-    const modal = document.getElementById('shareModal');
-    document.getElementById('modalLinkInput').value = link;
-    document.getElementById('modalName').textContent = name || '';
-
-    // Whatsapp link
-    const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g,'') : '#';
-    document.getElementById('modalWhatsapp').href = waHref;
-
-    // Instagram link
-    document.getElementById('modalInsta').href = instagram ? 'https://instagram.com/' + instagram.replace(/^@/,'') : '#';
-
-    // QR code via Google Chart API
-    const qrSrc = 'https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=' + encodeURIComponent(link);
-    const qrImg = document.getElementById('modalQrImg');
-    qrImg.src = qrSrc;
-    document.getElementById('downloadQr').href = qrSrc;
-
-    modal.classList.add('show');
-    modal.setAttribute('aria-hidden','false');
+    position: absolute;
+    left: 18px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
   }
 
-  function closeShareModal(){
-    const modal = document.getElementById('shareModal');
-    modal.classList.remove('show');
-    modal.setAttribute('aria-hidden','true');
+  .instagram-icon {
+    display: block;
+    position: absolute;
+    left: 18px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
   }
 
-  // copiar para clipboard
-  document.getElementById('copyBtn').addEventListener('click', async function(){
-    const val = document.getElementById('modalLinkInput').value;
-    try{ await navigator.clipboard.writeText(val); this.textContent = 'Copiado'; setTimeout(()=> this.textContent = 'Copiar',1200); }
-    catch(e){ alert('Não foi possível copiar.'); }
-  });
+  .menu-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1f1f1f;
+    border: none;
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  }
 
-  // fechar modal
-  document.getElementById('closeModal').addEventListener('click', closeShareModal);
-  document.getElementById('shareModal').addEventListener('click', function(e){ if(e.target === this) closeShareModal(); });
-  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeShareModal(); });
+  .consultor:hover .menu-btn { opacity: 1 }
 
-  // ligar os botões de menu
-  document.querySelectorAll('.menu-btn').forEach(btn => {
-    btn.addEventListener('click', function(e){
-      e.stopPropagation();
-      const item = this.closest('.consultor');
-      const link = item.dataset.link || window.location.href;
-      const whatsapp = item.dataset.whatsapp || '';
-      const instagram = item.dataset.instagram || '';
-      const name = item.dataset.name || '';
-      openShareModal({ link, whatsapp, instagram, name });
-    });
-  });
-
-  // opcional: ao clicar no texto principal (main-link) abre o WhatsApp (já configurado no href)
-
-</script>
-</body>
-</html>
+  .modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1200;
+  }
+  .modal.show { display: flex }
+  .modal-box {
+    width: 92%;
+    max-width: 420px;
+    background: #fff;
