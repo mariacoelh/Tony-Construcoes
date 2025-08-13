@@ -95,6 +95,7 @@
       border-radius: 12px;
       padding: 18px;
       color: #222;
+      text-align: center;
     }
 
     .modal-header {
@@ -107,6 +108,8 @@
       margin: 0;
       font-size: 16px;
       color: #222;
+      flex: 1;
+      text-align: center;
     }
 
     .close-btn {
@@ -115,6 +118,13 @@
       font-size: 20px;
       cursor: pointer;
       color: #222;
+      margin-left: auto;
+    }
+
+    #modalName {
+      color: #666;
+      font-size: 14px;
+      margin-top: 6px;
     }
 
     .link-row {
@@ -145,6 +155,7 @@
       display: flex;
       gap: 10px;
       margin: 10px 0;
+      justify-content: center;
     }
 
     .share-icons a {
@@ -164,15 +175,11 @@
     }
 
     .qr-wrap {
-      text-align: center;
       margin-top: 12px;
+      text-align: center;
     }
 
-    #modalQrCanvas {
-      border-radius: 8px;
-      max-width: 100%;
-      background: white;
-      display: block;
+    #qrCodeContainer {
       margin: 0 auto;
     }
 
@@ -185,6 +192,8 @@
       color: #7b61ff;
       text-decoration: none;
       cursor: pointer;
+      background: transparent;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -197,7 +206,7 @@
 
     <div class="lista-consultores">
       <!-- WhatsApp principal com botão -->
-      <div class="consultor" data-name="Consultor WhatsApp 1" data-link="https://wa.me/5588981219629" data-whatsapp="5588981219629">
+      <div class="consultor" data-name="Tire suas dúvidas pelo WhatsApp!" data-link="https://wa.me/5588981219629" data-whatsapp="5588981219629">
         <a class="main-link" href="https://wa.me/5588981219629" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp">
           Tire suas dúvidas pelo WhatsApp!
@@ -231,11 +240,11 @@
         <h3>Compartilhe este link</h3>
         <button class="close-btn" id="closeModal" aria-label="Fechar modal">✕</button>
       </div>
-      <p id="modalName" style="color:#666; font-size:14px; margin-top: 6px;"></p>
+      <p id="modalName"></p>
 
       <div class="link-row">
         <input id="modalLinkInput" type="text" readonly>
-        <button class="btn-copy" id="copyBtn">Copiar</button>
+        <button class="btn-copy" id="copyBtn" aria-label="Copiar link">Copiar</button>
       </div>
 
       <div class="share-icons">
@@ -248,7 +257,7 @@
       </div>
 
       <div class="qr-wrap">
-        <canvas id="modalQrCanvas" width="180" height="180" aria-label="Código QR"></canvas>
+        <div id="qrCodeContainer"></div>
         <div>
           <button id="downloadQr" class="qr-download" type="button">Baixar código QR</button>
         </div>
@@ -256,94 +265,100 @@
     </div>
   </div>
 
-  <!-- Biblioteca QR Code -->
-  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <!-- Biblioteca QR Code Styling -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-styling@1.5.0/lib/qrcode.min.js"></script>
   
-<script>
-  function openShareModal({ link, whatsapp, instagram, name }) {
-    const modal = document.getElementById('shareModal');
-    document.getElementById('modalLinkInput').value = link;
-    document.getElementById('modalName').textContent = name || '';
+  <script>
+    let qrCode;
 
-    // Links para WhatsApp e Instagram
-    const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g,'') : '#';
-    const instaHref = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
-    document.getElementById('modalWhatsapp').href = waHref;
-    document.getElementById('modalInsta').href = instaHref;
+    function openShareModal({ link, whatsapp, instagram, name }) {
+      const modal = document.getElementById('shareModal');
+      document.getElementById('modalLinkInput').value = link;
+      document.getElementById('modalName').textContent = name || '';
 
-    // Gerar QR Code com canvas
-    const qrCanvas = document.getElementById('modalQrCanvas');
-    QRCode.toCanvas(qrCanvas, link.trim(), { width: 180, margin: 2 }, function (error) {
-      if (error) {
-        console.error(error);
-        qrCanvas.getContext('2d').clearRect(0, 0, qrCanvas.width, qrCanvas.height);
+      const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '') : '#';
+      const instaHref = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
+      document.getElementById('modalWhatsapp').href = waHref;
+      document.getElementById('modalInsta').href = instaHref;
+
+      // Limpa QR antigo
+      const qrContainer = document.getElementById('qrCodeContainer');
+      qrContainer.innerHTML = '';
+
+      // Cria QR estilizado
+      qrCode = new QRCodeStyling({
+        width: 180,
+        height: 180,
+        data: link.trim(),
+        image: "", // Pode adicionar logo aqui, se quiser
+        dotsOptions: {
+          color: "#6a85ff",
+          type: "rounded"
+        },
+        backgroundOptions: {
+          color: "#f9f9f9"
+        },
+        cornersSquareOptions: {
+          color: "#7960ff",
+          type: "extra-rounded"
+        },
+        cornersDotOptions: {
+          color: "#7960ff",
+          type: "dot"
+        },
+      });
+
+      qrCode.append(qrContainer);
+
+      // Evento para download
+      const btnDownload = document.getElementById('downloadQr');
+      btnDownload.onclick = () => qrCode.download({ extension: "png" });
+
+      modal.classList.add('show');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeShareModal() {
+      const modal = document.getElementById('shareModal');
+      modal.classList.remove('show');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Copiar link
+    document.getElementById('copyBtn').addEventListener('click', async function () {
+      const val = document.getElementById('modalLinkInput').value;
+      try {
+        await navigator.clipboard.writeText(val);
+        this.textContent = 'Copiado';
+        setTimeout(() => this.textContent = 'Copiar', 1200);
+      } catch {
+        alert('Não foi possível copiar.');
       }
     });
 
-    // Mostrar modal
-    modal.classList.add('show');
-    modal.setAttribute('aria-hidden', 'false');
-  }
+    // Fechar modal
+    document.getElementById('closeModal').addEventListener('click', closeShareModal);
+    document.getElementById('shareModal').addEventListener('click', function (e) {
+      if (e.target === this) closeShareModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeShareModal();
+    });
 
-  function closeShareModal() {
-    const modal = document.getElementById('shareModal');
-    modal.classList.remove('show');
-    modal.setAttribute('aria-hidden', 'true');
-  }
-
-  // Copiar link
-  document.getElementById('copyBtn').addEventListener('click', async function () {
-    const val = document.getElementById('modalLinkInput').value;
-    try {
-      await navigator.clipboard.writeText(val);
-      this.textContent = 'Copiado';
-      setTimeout(() => this.textContent = 'Copiar', 1200);
-    } catch {
-      alert('Não foi possível copiar.');
-    }
-  });
-
-  // Fechar modal
-  document.getElementById('closeModal').addEventListener('click', closeShareModal);
-  document.getElementById('shareModal').addEventListener('click', function (e) {
-    if (e.target === this) closeShareModal();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeShareModal();
-  });
-
-  // Botão baixar QR code
-  document.getElementById('downloadQr').addEventListener('click', () => {
-    const qrCanvas = document.getElementById('modalQrCanvas');
-    const link = document.getElementById('modalLinkInput').value.trim();
-
-    // Gerar URL da imagem PNG do canvas
-    const dataUrl = qrCanvas.toDataURL('image/png');
-
-    // Criar link temporário para download
-    const a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = `qrcode-${link.replace(/[^a-z0-9]/gi,'_').toLowerCase()}.png`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  });
-
-  // Ativar os botões de três pontinhos para abrir o modal
-  document.querySelectorAll('.consultor').forEach(item => {
-    const btn = item.querySelector('.menu-btn');
-    if (btn) {
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        const link = item.dataset.link || window.location.href;
-        const whatsapp = item.dataset.whatsapp || '';
-        const instagram = item.dataset.instagram || '';
-        const name = item.dataset.name || '';
-        openShareModal({ link, whatsapp, instagram, name });
-      });
-    }
-  });
-</script>
-
+    // Botão abrir modal nos consultores com opções
+    document.querySelectorAll('.consultor').forEach(item => {
+      const btn = item.querySelector('.menu-btn');
+      if (btn) {
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const link = item.dataset.link || window.location.href;
+          const whatsapp = item.dataset.whatsapp || '';
+          const instagram = item.dataset.instagram || '';
+          const name = item.dataset.name || '';
+          openShareModal({ link, whatsapp, instagram, name });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
