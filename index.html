@@ -2,38 +2,20 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Escolha seu consultor</title>
   <style>
     :root { --maxw: 420px; }
     body {
       font-family: Inter, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      background: #000;
-      color: #fff;
+      margin: 0; padding: 0;
+      display: flex; justify-content: center;
+      background: #000; color: #fff;
     }
-    .container {
-      width: 100%;
-      max-width: var(--maxw);
-      padding: 40px 20px;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 22px;
-    }
-    header img {
-      max-width: 120px;
-      display: block;
-      margin: 0 auto;
-    }
-    h1 {
-      font-weight: 500;
-      font-size: 18px;
-      margin: 18px 0 0;
-    }
+    .container { width: 100%; max-width: var(--maxw); padding: 40px 20px; }
+    header { text-align: center; margin-bottom: 22px }
+    header img { max-width: 120px; display: block; margin: 0 auto }
+    h1 { font-weight: 500; font-size: 18px; margin: 18px 0 0 }
 
     .lista-consultores {
       margin-top: 26px;
@@ -75,9 +57,9 @@
     .whatsapp-icon, .instagram-icon {
       position: absolute;
       left: 18px;
-      width: 22px;
-      height: 22px;
-      opacity: 0.85;
+      width: 20px;
+      height: 20px;
+      opacity: 0.8;
     }
 
     .menu-btn {
@@ -92,23 +74,19 @@
       font-size: 16px;
       color: #fff;
       border-radius: 50%;
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
     }
 
-    /* Modal */
     .modal {
       position: fixed;
       inset: 0;
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0,0,0,0.45);
       z-index: 1200;
     }
 
-    .modal.show {
-      display: flex;
-    }
+    .modal.show { display: flex; }
 
     .modal-box {
       width: 92%;
@@ -116,7 +94,6 @@
       background: #fff;
       border-radius: 12px;
       padding: 18px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
     }
 
     .modal-header {
@@ -163,25 +140,24 @@
 
     .share-icons {
       display: flex;
-      gap: 12px;
-      margin: 12px 0;
+      gap: 10px;
+      margin: 10px 0;
     }
 
     .share-icons a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       border-radius: 8px;
       text-decoration: none;
-      background: #fff;
-      border: 1px solid #eee;
+      background: #f4f4f4;
     }
 
-    .share-icons a img {
-      width: 24px;
-      height: 24px;
+    .share-icons img {
+      width: 22px;
+      height: 22px;
     }
 
     .qr-wrap {
@@ -204,36 +180,26 @@
       color: #7b61ff;
       text-decoration: none;
     }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 26px 14px;
-      }
-      .menu-btn {
-        right: 8px;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <img src="sua-logo.png" alt="Logo Empresa">
+      <img src="Image/Logo da loja.png" alt="Logo Empresa">
       <h1>Escolha o seu consultor</h1>
     </header>
 
     <div class="lista-consultores">
-
-      <!-- Consultor 1 - WhatsApp com botão -->
-      <div class="consultor" data-link="https://wa.me/5588981219629" data-whatsapp="5588981219629" data-name="Consultor WhatsApp 1">
+      <!-- WhatsApp principal com botão -->
+      <div class="consultor" data-name="Consultor WhatsApp 1" data-link="https://wa.me/5588981219629" data-whatsapp="5588981219629">
         <a class="main-link" href="https://wa.me/5588981219629" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp">
           Tire suas dúvidas pelo WhatsApp!
         </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
+        <button class="menu-btn">⋯</button>
       </div>
 
-      <!-- Consultor 2 - WhatsApp sem botão -->
+      <!-- Outro consultor sem botão -->
       <div class="consultor">
         <a class="main-link" href="https://wa.me/5588998436316" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp">
@@ -242,42 +208,41 @@
       </div>
 
       <!-- Instagram com botão -->
-      <div class="consultor" data-link="https://www.instagram.com/tony_construcoes" data-instagram="tony_construcoes" data-name="Instagram Oficial">
+      <div class="consultor" data-name="Instagram Oficial" data-link="https://www.instagram.com/tony_construcoes" data-instagram="tony_construcoes">
         <a class="main-link" href="https://www.instagram.com/tony_construcoes" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="instagram-icon" alt="Instagram">
           Acesse nosso Instagram
         </a>
-        <button class="menu-btn" aria-label="Abrir menu">⋯</button>
+        <button class="menu-btn">⋯</button>
       </div>
-
     </div>
   </div>
 
   <!-- Modal -->
   <div id="shareModal" class="modal" aria-hidden="true">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box" role="dialog" aria-modal="true">
       <div class="modal-header">
-        <h3 id="modalTitle">Compartilhe este link</h3>
-        <button class="close-btn" id="closeModal" aria-label="Fechar">✕</button>
+        <h3>Compartilhe este link</h3>
+        <button class="close-btn" id="closeModal">✕</button>
       </div>
-      <p id="modalName" style="margin:8px 0 0; color:#666; font-size:14px"></p>
+      <p id="modalName" style="color:#666; font-size:14px; margin-top: 6px;"></p>
 
       <div class="link-row">
-        <input id="modalLinkInput" type="text" readonly value="">
+        <input id="modalLinkInput" type="text" readonly>
         <button class="btn-copy" id="copyBtn">Copiar</button>
       </div>
 
       <div class="share-icons">
-        <a id="modalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+        <a id="modalWhatsapp" href="#" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp">
         </a>
-        <a id="modalInsta" href="#" target="_blank" rel="noopener noreferrer" title="Instagram">
+        <a id="modalInsta" href="#" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
         </a>
       </div>
 
       <div class="qr-wrap">
-        <img id="modalQrImg" src="" alt="QR code">
+        <img id="modalQrImg" src="" alt="QR Code">
         <div>
           <a id="downloadQr" class="qr-download" href="#" download="qrcode.png">Baixar código QR</a>
         </div>
@@ -287,56 +252,8 @@
 
   <script>
     function openShareModal({ link, whatsapp, instagram, name }) {
+      const modal = document.getElementById('shareModal');
       document.getElementById('modalLinkInput').value = link;
       document.getElementById('modalName').textContent = name || '';
-      document.getElementById('modalWhatsapp').href = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '') : '#';
-      document.getElementById('modalInsta').href = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
 
-      const qrSrc = 'https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=' + encodeURIComponent(link);
-      document.getElementById('modalQrImg').src = qrSrc;
-      document.getElementById('downloadQr').href = qrSrc;
-
-      const modal = document.getElementById('shareModal');
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeShareModal() {
-      const modal = document.getElementById('shareModal');
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden', 'true');
-    }
-
-    document.getElementById('copyBtn').addEventListener('click', async function () {
-      const val = document.getElementById('modalLinkInput').value;
-      try {
-        await navigator.clipboard.writeText(val);
-        this.textContent = 'Copiado';
-        setTimeout(() => this.textContent = 'Copiar', 1200);
-      } catch (e) {
-        alert('Não foi possível copiar.');
-      }
-    });
-
-    document.getElementById('closeModal').addEventListener('click', closeShareModal);
-    document.getElementById('shareModal').addEventListener('click', function (e) {
-      if (e.target === this) closeShareModal();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeShareModal();
-    });
-
-    document.querySelectorAll('.menu-btn').forEach(btn => {
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        const item = this.closest('.consultor');
-        const link = item.dataset.link || window.location.href;
-        const whatsapp = item.dataset.whatsapp || '';
-        const instagram = item.dataset.instagram || '';
-        const name = item.dataset.name || '';
-        openShareModal({ link, whatsapp, instagram, name });
-      });
-    });
-  </script>
-</body>
-</html>
+     
