@@ -58,15 +58,7 @@
     border-radius: 10px;
   }
 
-  .whatsapp-icon {
-    display: block;
-    position: absolute;
-    left: 18px;
-    width: 20px;
-    height: 20px;
-    opacity: 0.8;
-  }
-
+  .whatsapp-icon,
   .instagram-icon {
     display: block;
     position: absolute;
@@ -240,4 +232,83 @@
       <div class="link-row">
         <input id="modalLinkInput" type="text" readonly value="">
         <button class="btn-copy" id="copyBtn">Copiar</button>
-     
+      </div>
+
+      <div class="share-icons">
+        <a id="modalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" title="Abrir WhatsApp">WA</a>
+        <a id="modalInsta" href="#" target="_blank" rel="noopener noreferrer" title="Instagram">IG</a>
+      </div>
+
+      <div class="qr-wrap">
+        <img id="modalQrImg" src="" alt="QR code">
+        <div>
+          <a id="downloadQr" class="qr-download" href="#" download="qrcode.png">Baixar código QR</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  function openShareModal({ link, whatsapp, instagram, name }) {
+    const modal = document.getElementById('shareModal');
+    document.getElementById('modalLinkInput').value = link;
+    document.getElementById('modalName').textContent = name || '';
+
+    const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '') : '#';
+    document.getElementById('modalWhatsapp').href = waHref;
+
+    document.getElementById('modalInsta').href = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
+
+    const qrSrc = 'https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=' + encodeURIComponent(link);
+    document.getElementById('modalQrImg').src = qrSrc;
+    document.getElementById('downloadQr').href = qrSrc;
+
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeShareModal() {
+    const modal = document.getElementById('shareModal');
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  document.getElementById('copyBtn').addEventListener('click', async function () {
+    const val = document.getElementById('modalLinkInput').value;
+    try {
+      await navigator.clipboard.writeText(val);
+      this.textContent = 'Copiado';
+      setTimeout(() => this.textContent = 'Copiar', 1200);
+    } catch {
+      alert('Não foi possível copiar.');
+    }
+  });
+
+  document.getElementById('closeModal').addEventListener('click', closeShareModal);
+  document.getElementById('shareModal').addEventListener('click', function (e) {
+    if (e.target === this) closeShareModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeShareModal();
+  });
+
+  document.querySelectorAll('.consultor').forEach(consultor => {
+    const btn = consultor.querySelector('.menu-btn');
+    if (!consultor.dataset.link || !btn) {
+      if (btn) btn.remove();
+      return;
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      openShareModal({
+        link: consultor.dataset.link,
+        whatsapp: consultor.dataset.whatsapp || '',
+        instagram: consultor.dataset.instagram || '',
+        name: consultor.dataset.name || ''
+      });
+    });
+  });
+</script>
+</body>
+</html>
