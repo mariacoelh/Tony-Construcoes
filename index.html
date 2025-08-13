@@ -94,6 +94,7 @@
       background: #fff;
       border-radius: 12px;
       padding: 18px;
+      color: #222;
     }
 
     .modal-header {
@@ -128,6 +129,7 @@
       padding: 8px 10px;
       border-radius: 8px;
       font-size: 14px;
+      color: #222;
     }
 
     .btn-copy {
@@ -136,6 +138,7 @@
       border: 1px solid #ddd;
       background: #f7f7f7;
       cursor: pointer;
+      color: #222;
     }
 
     .share-icons {
@@ -165,10 +168,14 @@
       margin-top: 12px;
     }
 
-    .qr-wrap img {
-      width: 180px;
-      max-width: 100%;
+    #modalQrCanvas {
       border-radius: 8px;
+      width: 180px;
+      height: 180px;
+      max-width: 100%;
+      background: white;
+      display: block;
+      margin: 0 auto;
     }
 
     .qr-download {
@@ -179,6 +186,7 @@
       border: 1px solid #7b61ff;
       color: #7b61ff;
       text-decoration: none;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -196,7 +204,7 @@
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp">
           Tire suas dúvidas pelo WhatsApp!
         </a>
-        <button class="menu-btn">⋯</button>
+        <button class="menu-btn" aria-label="Abrir opções">⋯</button>
       </div>
 
       <!-- Outro consultor sem botão -->
@@ -213,7 +221,7 @@
           <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="instagram-icon" alt="Instagram">
           Acesse nosso Instagram
         </a>
-        <button class="menu-btn">⋯</button>
+        <button class="menu-btn" aria-label="Abrir opções">⋯</button>
       </div>
     </div>
   </div>
@@ -223,7 +231,7 @@
     <div class="modal-box" role="dialog" aria-modal="true">
       <div class="modal-header">
         <h3>Compartilhe este link</h3>
-        <button class="close-btn" id="closeModal">✕</button>
+        <button class="close-btn" id="closeModal" aria-label="Fechar modal">✕</button>
       </div>
       <p id="modalName" style="color:#666; font-size:14px; margin-top: 6px;"></p>
 
@@ -233,23 +241,26 @@
       </div>
 
       <div class="share-icons">
-        <a id="modalWhatsapp" href="#" target="_blank">
+        <a id="modalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="Abrir WhatsApp">
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp">
         </a>
-        <a id="modalInsta" href="#" target="_blank">
+        <a id="modalInsta" href="#" target="_blank" rel="noopener noreferrer" aria-label="Abrir Instagram">
           <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
         </a>
       </div>
 
       <div class="qr-wrap">
-        <img id="modalQrImg" src="" alt="QR Code">
+        <canvas id="modalQrCanvas" aria-label="Código QR"></canvas>
         <div>
-          <a id="downloadQr" class="qr-download" href="#" download="qrcode.png">Baixar código QR</a>
+          <button id="downloadQr" class="qr-download" type="button">Baixar código QR</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Biblioteca QR Code -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  
 <script>
   function openShareModal({ link, whatsapp, instagram, name }) {
     const modal = document.getElementById('shareModal');
@@ -262,17 +273,14 @@
     document.getElementById('modalWhatsapp').href = waHref;
     document.getElementById('modalInsta').href = instaHref;
 
-    // Gerar QR Code (com URL encoded)
-    const encodedLink = encodeURIComponent(link.trim());
-    const qrSrc = `https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=${encodedLink}`;
-    const qrImg = document.getElementById('modalQrImg');
-    qrImg.src = qrSrc;
-    qrImg.alt = 'QR Code para ' + link;
-
-    // Atualizar link de download para baixar QR Code
-    const downloadLink = document.getElementById('downloadQr');
-    downloadLink.href = qrSrc;
-    downloadLink.setAttribute('download', 'qrcode.png');
+    // Gerar QR Code com canvas
+    const qrCanvas = document.getElementById('modalQrCanvas');
+    QRCode.toCanvas(qrCanvas, link.trim(), { width: 180, margin: 2 }, function (error) {
+      if (error) {
+        console.error(error);
+        qrCanvas.getContext('2d').clearRect(0, 0, qrCanvas.width, qrCanvas.height);
+      }
+    });
 
     // Mostrar modal
     modal.classList.add('show');
@@ -285,7 +293,7 @@
     modal.setAttribute('aria-hidden', 'true');
   }
 
-  // Eventos do modal
+  // Copiar link
   document.getElementById('copyBtn').addEventListener('click', async function () {
     const val = document.getElementById('modalLinkInput').value;
     try {
@@ -297,12 +305,30 @@
     }
   });
 
+  // Fechar modal
   document.getElementById('closeModal').addEventListener('click', closeShareModal);
   document.getElementById('shareModal').addEventListener('click', function (e) {
     if (e.target === this) closeShareModal();
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') closeShareModal();
+  });
+
+  // Botão baixar QR code
+  document.getElementById('downloadQr').addEventListener('click', () => {
+    const qrCanvas = document.getElementById('modalQrCanvas');
+    const link = document.getElementById('modalLinkInput').value.trim();
+
+    // Gerar URL da imagem PNG do canvas
+    const dataUrl = qrCanvas.toDataURL('image/png');
+
+    // Criar link temporário para download
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = `qrcode-${link.replace(/[^a-z0-9]/gi,'_').toLowerCase()}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   });
 
   // Ativar os botões de três pontinhos para abrir o modal
