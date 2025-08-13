@@ -74,6 +74,8 @@
       font-size: 16px;
       color: #fff;
       border-radius: 50%;
+      line-height: 1;
+      user-select: none;
     }
 
     .modal {
@@ -96,6 +98,7 @@
       padding: 18px;
       color: #222;
       text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     }
 
     .modal-header {
@@ -119,6 +122,8 @@
       cursor: pointer;
       color: #222;
       margin-left: auto;
+      line-height: 1;
+      user-select: none;
     }
 
     #modalName {
@@ -149,6 +154,11 @@
       background: #f7f7f7;
       cursor: pointer;
       color: #222;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-copy:hover {
+      background-color: #e2e2e2;
     }
 
     .share-icons {
@@ -194,36 +204,41 @@
       cursor: pointer;
       background: transparent;
       font-weight: 600;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .qr-download:hover {
+      background-color: #7b61ff;
+      color: #fff;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <img src="Image/Logo-da-loja.png" alt="Logo Empresa">
+      <img src="Image/Logo-da-loja.png" alt="Logo Empresa" />
       <h1>Escolha o seu consultor</h1>
     </header>
 
     <div class="lista-consultores">
       <div class="consultor" data-name="Tire suas dúvidas pelo WhatsApp!" data-link="https://wa.me/5588981219629" data-whatsapp="5588981219629">
-        <a class="main-link" href="https://wa.me/5588981219629" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp">
+        <a class="main-link" href="https://wa.me/5588981219629" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp" />
           Tire suas dúvidas pelo WhatsApp!
         </a>
         <button class="menu-btn" aria-label="Abrir opções">⋯</button>
       </div>
 
       <div class="consultor" data-name="Consultor Adriano" data-link="https://wa.me/5588998436316" data-whatsapp="5588998436316">
-        <a class="main-link" href="https://wa.me/5588998436316" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp">
+        <a class="main-link" href="https://wa.me/5588998436316" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp" />
           Consultor Adriano
         </a>
         <button class="menu-btn" aria-label="Abrir opções">⋯</button>
       </div>
 
       <div class="consultor" data-name="Instagram Oficial" data-link="https://www.instagram.com/tony_construcoes" data-instagram="tony_construcoes">
-        <a class="main-link" href="https://www.instagram.com/tony_construcoes" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="instagram-icon" alt="Instagram">
+        <a class="main-link" href="https://www.instagram.com/tony_construcoes" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="instagram-icon" alt="Instagram" />
           Acesse nosso Instagram
         </a>
         <button class="menu-btn" aria-label="Abrir opções">⋯</button>
@@ -233,24 +248,24 @@
 
   <!-- Modal -->
   <div id="shareModal" class="modal" aria-hidden="true">
-    <div class="modal-box" role="dialog" aria-modal="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modal-header">
-        <h3>Compartilhe este link</h3>
+        <h3 id="modalTitle">Compartilhe este link</h3>
         <button class="close-btn" id="closeModal" aria-label="Fechar modal">✕</button>
       </div>
       <p id="modalName"></p>
 
       <div class="link-row">
-        <input id="modalLinkInput" type="text" readonly>
+        <input id="modalLinkInput" type="text" readonly aria-label="Link para compartilhar" />
         <button class="btn-copy" id="copyBtn" aria-label="Copiar link">Copiar</button>
       </div>
 
       <div class="share-icons">
-        <a id="modalWhatsapp" href="#" target="_blank" aria-label="WhatsApp">
-          <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp">
+        <a id="modalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp" />
         </a>
-        <a id="modalInsta" href="#" target="_blank" aria-label="Instagram">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
+        <a id="modalInsta" href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
         </a>
       </div>
 
@@ -263,38 +278,44 @@
     </div>
   </div>
 
+  <!-- QR Code Styling Lib -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode-styling@1.5.0/lib/qrcode.min.js"></script>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
       const modal = document.getElementById('shareModal');
-      const closeModal = document.getElementById('closeModal');
-      const copyBtn = document.getElementById('copyBtn');
       const modalLinkInput = document.getElementById('modalLinkInput');
       const modalName = document.getElementById('modalName');
       const modalWhatsapp = document.getElementById('modalWhatsapp');
       const modalInsta = document.getElementById('modalInsta');
+      const closeModalBtn = document.getElementById('closeModal');
+      const copyBtn = document.getElementById('copyBtn');
       const qrCodeContainer = document.getElementById('qrCodeContainer');
       const downloadQr = document.getElementById('downloadQr');
-      let qrCode;
+
+      let qrCode = null;
 
       function openShareModal({ link, whatsapp, instagram, name }) {
-        modalLinkInput.value = link;
+        modalLinkInput.value = link || '';
         modalName.textContent = name || '';
+
         modalWhatsapp.href = whatsapp ? 'https://wa.me/' + whatsapp.replace(/\D/g, '') : '#';
         modalInsta.href = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
 
         qrCodeContainer.innerHTML = '';
+
         qrCode = new QRCodeStyling({
           width: 180,
           height: 180,
-          data: link,
+          data: link || '',
           dotsOptions: { color: "#6a85ff", type: "rounded" },
           backgroundOptions: { color: "#f9f9f9" },
           cornersSquareOptions: { color: "#7960ff", type: "extra-rounded" },
           cornersDotOptions: { color: "#7960ff", type: "dot" }
         });
+
         qrCode.append(qrCodeContainer);
+
         downloadQr.onclick = () => qrCode.download({ extension: "png" });
 
         modal.classList.add('show');
@@ -306,26 +327,43 @@
         modal.setAttribute('aria-hidden', 'true');
       }
 
+      // Copiar link
       copyBtn.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(modalLinkInput.value);
           copyBtn.textContent = 'Copiado';
-          setTimeout(() => copyBtn.textContent = 'Copiar', 1500);
+          setTimeout(() => {
+            copyBtn.textContent = 'Copiar';
+          }, 1500);
         } catch {
           alert('Erro ao copiar');
         }
       });
 
-      closeModal.addEventListener('click', closeShareModal);
-      modal.addEventListener('click', e => { if (e.target === modal) closeShareModal(); });
+      // Fechar modal botão
+      closeModalBtn.addEventListener('click', closeShareModal);
 
+      // Fechar modal clicando fora da modal-box
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeShareModal();
+        }
+      });
+
+      // Abrir modal ao clicar nos botões ⋯
       document.querySelectorAll('.menu-btn').forEach(btn => {
-        btn.addEventListener('click', function () {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
           const item = btn.closest('.consultor');
+          if (!item) return;
+
           const link = item.dataset.link || '';
           const whatsapp = item.dataset.whatsapp || '';
           const instagram = item.dataset.instagram || '';
           const name = item.dataset.name || '';
+
           openShareModal({ link, whatsapp, instagram, name });
         });
       });
