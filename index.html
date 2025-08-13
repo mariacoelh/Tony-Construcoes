@@ -74,7 +74,6 @@
       font-size: 16px;
       color: #fff;
       border-radius: 50%;
-      z-index: 2;
     }
 
     .modal {
@@ -207,27 +206,27 @@
 
     <div class="lista-consultores">
       <div class="consultor" data-name="Tire suas dúvidas pelo WhatsApp!" data-link="https://wa.me/5588981219629" data-whatsapp="5588981219629">
-        <div class="main-link">
+        <a class="main-link" href="https://wa.me/5588981219629" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp">
           Tire suas dúvidas pelo WhatsApp!
-        </div>
-        <button class="menu-btn" type="button" aria-label="Abrir opções">⋯</button>
+        </a>
+        <button class="menu-btn" aria-label="Abrir opções">⋯</button>
       </div>
 
       <div class="consultor" data-name="Consultor Adriano" data-link="https://wa.me/5588998436316" data-whatsapp="5588998436316">
-        <div class="main-link">
+        <a class="main-link" href="https://wa.me/5588998436316" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" class="whatsapp-icon" alt="WhatsApp">
           Consultor Adriano
-        </div>
-        <button class="menu-btn" type="button" aria-label="Abrir opções">⋯</button>
+        </a>
+        <button class="menu-btn" aria-label="Abrir opções">⋯</button>
       </div>
 
       <div class="consultor" data-name="Instagram Oficial" data-link="https://www.instagram.com/tony_construcoes" data-instagram="tony_construcoes">
-        <div class="main-link">
+        <a class="main-link" href="https://www.instagram.com/tony_construcoes" target="_blank">
           <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" class="instagram-icon" alt="Instagram">
           Acesse nosso Instagram
-        </div>
-        <button class="menu-btn" type="button" aria-label="Abrir opções">⋯</button>
+        </a>
+        <button class="menu-btn" aria-label="Abrir opções">⋯</button>
       </div>
     </div>
   </div>
@@ -247,10 +246,10 @@
       </div>
 
       <div class="share-icons">
-        <a id="modalWhatsapp" href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+        <a id="modalWhatsapp" href="#" target="_blank" aria-label="WhatsApp">
           <img src="https://cdn-icons-png.flaticon.com/512/124/124034.png" alt="WhatsApp">
         </a>
-        <a id="modalInsta" href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <a id="modalInsta" href="#" target="_blank" aria-label="Instagram">
           <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
         </a>
       </div>
@@ -264,74 +263,70 @@
     </div>
   </div>
 
-  <!-- QR Code Styling Lib -->
   <script src="https://cdn.jsdelivr.net/npm/qrcode-styling@1.5.0/lib/qrcode.min.js"></script>
 
   <script>
-    let qrCode;
-
-    function openShareModal({ link, whatsapp, instagram, name }) {
-      const modal = document.getElementById('shareModal');
-      document.getElementById('modalLinkInput').value = link;
-      document.getElementById('modalName').textContent = name || '';
-
-      document.getElementById('modalWhatsapp').href = whatsapp ? 'https://wa.me/' + whatsapp.replace(/\D/g, '') : '#';
-      document.getElementById('modalInsta').href = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
-
-      const qrContainer = document.getElementById('qrCodeContainer');
-      qrContainer.innerHTML = '';
-
-      qrCode = new QRCodeStyling({
-        width: 180,
-        height: 180,
-        data: link,
-        dotsOptions: { color: "#6a85ff", type: "rounded" },
-        backgroundOptions: { color: "#f9f9f9" },
-        cornersSquareOptions: { color: "#7960ff", type: "extra-rounded" },
-        cornersDotOptions: { color: "#7960ff", type: "dot" }
-      });
-
-      qrCode.append(qrContainer);
-
-      document.getElementById('downloadQr').onclick = () => qrCode.download({ extension: "png" });
-
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden', 'false');
-    }
-
-    function closeShareModal() {
-      const modal = document.getElementById('shareModal');
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden', 'true');
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById('copyBtn').addEventListener('click', async function () {
-        const val = document.getElementById('modalLinkInput').value;
+      const modal = document.getElementById('shareModal');
+      const closeModal = document.getElementById('closeModal');
+      const copyBtn = document.getElementById('copyBtn');
+      const modalLinkInput = document.getElementById('modalLinkInput');
+      const modalName = document.getElementById('modalName');
+      const modalWhatsapp = document.getElementById('modalWhatsapp');
+      const modalInsta = document.getElementById('modalInsta');
+      const qrCodeContainer = document.getElementById('qrCodeContainer');
+      const downloadQr = document.getElementById('downloadQr');
+      let qrCode;
+
+      function openShareModal({ link, whatsapp, instagram, name }) {
+        modalLinkInput.value = link;
+        modalName.textContent = name || '';
+        modalWhatsapp.href = whatsapp ? 'https://wa.me/' + whatsapp.replace(/\D/g, '') : '#';
+        modalInsta.href = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
+
+        qrCodeContainer.innerHTML = '';
+        qrCode = new QRCodeStyling({
+          width: 180,
+          height: 180,
+          data: link,
+          dotsOptions: { color: "#6a85ff", type: "rounded" },
+          backgroundOptions: { color: "#f9f9f9" },
+          cornersSquareOptions: { color: "#7960ff", type: "extra-rounded" },
+          cornersDotOptions: { color: "#7960ff", type: "dot" }
+        });
+        qrCode.append(qrCodeContainer);
+        downloadQr.onclick = () => qrCode.download({ extension: "png" });
+
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeShareModal() {
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      copyBtn.addEventListener('click', async () => {
         try {
-          await navigator.clipboard.writeText(val);
-          this.textContent = 'Copiado';
-          setTimeout(() => this.textContent = 'Copiar', 1500);
+          await navigator.clipboard.writeText(modalLinkInput.value);
+          copyBtn.textContent = 'Copiado';
+          setTimeout(() => copyBtn.textContent = 'Copiar', 1500);
         } catch {
           alert('Erro ao copiar');
         }
       });
 
-      document.getElementById('closeModal').addEventListener('click', closeShareModal);
-      document.getElementById('shareModal').addEventListener('click', function (e) {
-        if (e.target === this) closeShareModal();
-      });
+      closeModal.addEventListener('click', closeShareModal);
+      modal.addEventListener('click', e => { if (e.target === modal) closeShareModal(); });
 
       document.querySelectorAll('.menu-btn').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
+        btn.addEventListener('click', function () {
           const item = btn.closest('.consultor');
           const link = item.dataset.link || '';
           const whatsapp = item.dataset.whatsapp || '';
           const instagram = item.dataset.instagram || '';
           const name = item.dataset.name || '';
-          if (link) openShareModal({ link, whatsapp, instagram, name });
+          openShareModal({ link, whatsapp, instagram, name });
         });
       });
     });
