@@ -1,216 +1,208 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Escolha seu consultor</title>
-  <style>
-    :root { --maxw: 420px; }
-    body {
-      font-family: Inter, Arial, sans-serif;
-      margin: 0; padding: 0;
-      display: flex; justify-content: center;
-      background: #000; color: #fff;
-    }
-    .container { width: 100%; max-width: var(--maxw); padding: 40px 20px; }
-    header { text-align: center; margin-bottom: 22px }
-    header img { max-width: 120px; display: block; margin: 0 auto }
-    h1 { font-weight: 500; font-size: 18px; margin: 18px 0 0 }
-
-    .lista-consultores {
-      margin-top: 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .consultor {
-      background: transparent;
-      border-radius: 10px;
-      padding: 0;
-      width: 100%;
-      position: relative;
-      display: flex;
-      align-items: stretch;
-      transition: all 0.25s ease;
-    }
-
-    .consultor:hover {
-      background-color: rgba(252, 75, 8, 0.15);
-      box-shadow: 0 0 0 2px #FC4B08, 0 0 18px #FC4B08;
-      transform: translateY(-2px);
-    }
-
-    .main-link {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      color: #fff;
-      font-size: 14px;
-      padding: 18px 48px;
-      position: relative;
-      border-radius: 10px;
-    }
-
-    .whatsapp-icon, .instagram-icon {
-      position: absolute;
-      left: 18px;
-      width: 20px;
-      height: 20px;
-      opacity: 0.8;
-    }
-
-    .menu-btn {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: #1f1f1f;
-      border: none;
-      cursor: pointer;
-      padding: 6px 10px;
-      font-size: 16px;
-      color: #fff;
-      border-radius: 50%;
-      line-height: 1;
-      user-select: none;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.45);
-      z-index: 1200;
-    }
-
-    .modal.show { display: flex; }
-
-    .modal-box {
-      width: 92%;
-      max-width: 420px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 18px;
-      color: #222;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .modal-header h3 {
-      margin: 0;
-      font-size: 16px;
-      color: #222;
-      flex: 1;
-      text-align: center;
-    }
-
-    .close-btn {
-      background: transparent;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: #222;
-      margin-left: auto;
-      line-height: 1;
-      user-select: none;
-    }
-
-    #modalName {
-      color: #666;
-      font-size: 14px;
-      margin-top: 6px;
-    }
-
-    .link-row {
-      display: flex;
-      gap: 8px;
-      margin: 12px 0;
-    }
-
-    .link-row input {
-      flex: 1;
-      border: 1px solid #e6e6e6;
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 14px;
-      color: #222;
-    }
-
-    .btn-copy {
-      padding: 8px 10px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      background: #f7f7f7;
-      cursor: pointer;
-      color: #222;
-      transition: background-color 0.2s ease;
-    }
-
-    .btn-copy:hover {
-      background-color: #e2e2e2;
-    }
-
-    .share-icons {
-      display: flex;
-      gap: 10px;
-      margin: 10px 0;
-      justify-content: center;
-    }
-
-    .share-icons a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      text-decoration: none;
-      background: #f4f4f4;
-    }
-
-    .share-icons img {
-      width: 22px;
-      height: 22px;
-    }
-
-    .qr-wrap {
-      margin-top: 12px;
-      text-align: center;
-    }
-
-    #qrCodeContainer {
-      margin: 0 auto;
-    }
-
-    .qr-download {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: 1px solid #7b61ff;
-      color: #7b61ff;
-      text-decoration: none;
-      cursor: pointer;
-      background: transparent;
-      font-weight: 600;
-      transition: background-color 0.2s ease, color 0.2s ease;
-    }
-    .qr-download:hover {
-      background-color: #7b61ff;
-      color: #fff;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Escolha seu consultor</title>
+<style>
+  :root { --maxw: 420px; }
+  body {
+    font-family: Inter, Arial, sans-serif;
+    margin: 0; padding: 0;
+    background: #000; color: #fff;
+    display: flex; justify-content: center;
+  }
+  .container {
+    max-width: var(--maxw);
+    width: 100%;
+    padding: 40px 20px;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  header img {
+    max-width: 120px;
+    display: block;
+    margin: 0 auto;
+  }
+  h1 {
+    font-weight: 500;
+    font-size: 18px;
+    margin: 18px 0 0;
+  }
+  .lista-consultores {
+    margin-top: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .consultor {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-radius: 10px;
+    padding: 0;
+    width: 100%;
+    transition: all 0.25s ease;
+    cursor: default;
+  }
+  .consultor:hover {
+    background-color: rgba(252, 75, 8, 0.15);
+    box-shadow: 0 0 0 2px #FC4B08, 0 0 18px #FC4B08;
+    transform: translateY(-2px);
+  }
+  .main-link {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 18px 48px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 14px;
+    position: relative;
+    border-radius: 10px;
+  }
+  .whatsapp-icon,
+  .instagram-icon {
+    position: absolute;
+    left: 18px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.8;
+  }
+  .menu-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1f1f1f;
+    border: none;
+    cursor: pointer;
+    padding: 6px 10px;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 50%;
+    line-height: 1;
+    user-select: none;
+  }
+  /* Modal */
+  .modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.45);
+    z-index: 1200;
+  }
+  .modal.show {
+    display: flex;
+  }
+  .modal-box {
+    width: 92%;
+    max-width: 420px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px;
+    color: #222;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-header h3 {
+    margin: 0;
+    font-size: 16px;
+    flex: 1;
+    text-align: center;
+  }
+  .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #222;
+    margin-left: auto;
+    user-select: none;
+  }
+  #modalName {
+    color: #666;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .link-row {
+    display: flex;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .link-row input {
+    flex: 1;
+    border: 1px solid #e6e6e6;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #222;
+  }
+  .btn-copy {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #f7f7f7;
+    cursor: pointer;
+    color: #222;
+    transition: background-color 0.2s ease;
+  }
+  .btn-copy:hover {
+    background-color: #e2e2e2;
+  }
+  .share-icons {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    justify-content: center;
+  }
+  .share-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    background: #f4f4f4;
+  }
+  .share-icons img {
+    width: 22px;
+    height: 22px;
+  }
+  .qr-wrap {
+    margin-top: 12px;
+    text-align: center;
+  }
+  #qrCodeContainer {
+    margin: 0 auto;
+  }
+  .qr-download {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #7b61ff;
+    color: #7b61ff;
+    cursor: pointer;
+    background: transparent;
+    font-weight: 600;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .qr-download:hover {
+    background-color: #7b61ff;
+    color: #fff;
+  }
+</style>
 </head>
 <body>
   <div class="container">
@@ -271,9 +263,7 @@
 
       <div class="qr-wrap">
         <div id="qrCodeContainer"></div>
-        <div>
-          <button id="downloadQr" class="qr-download" type="button">Baixar código QR</button>
-        </div>
+        <button id="downloadQr" class="qr-download" type="button">Baixar código QR</button>
       </div>
     </div>
   </div>
@@ -295,13 +285,16 @@
 
       let qrCode = null;
 
+      // Função para abrir o modal com dados dinâmicos
       function openShareModal({ link, whatsapp, instagram, name }) {
         modalLinkInput.value = link || '';
         modalName.textContent = name || '';
 
+        // Ajusta os links para os ícones no modal
         modalWhatsapp.href = whatsapp ? 'https://wa.me/' + whatsapp.replace(/\D/g, '') : '#';
         modalInsta.href = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
 
+        // Limpa e cria QR code novo
         qrCodeContainer.innerHTML = '';
 
         qrCode = new QRCodeStyling({
@@ -316,12 +309,15 @@
 
         qrCode.append(qrCodeContainer);
 
+        // Botão baixar QR code
         downloadQr.onclick = () => qrCode.download({ extension: "png" });
 
+        // Mostrar modal
         modal.classList.add('show');
         modal.setAttribute('aria-hidden', 'false');
       }
 
+      // Fecha o modal
       function closeShareModal() {
         modal.classList.remove('show');
         modal.setAttribute('aria-hidden', 'true');
@@ -331,7 +327,7 @@
       copyBtn.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(modalLinkInput.value);
-          copyBtn.textContent = 'Copiado';
+          copyBtn.textContent = 'Copiado!';
           setTimeout(() => {
             copyBtn.textContent = 'Copiar';
           }, 1500);
@@ -340,29 +336,28 @@
         }
       });
 
-      // Fechar modal botão
+      // Fecha modal ao clicar no X
       closeModalBtn.addEventListener('click', closeShareModal);
 
-      // Fechar modal clicando fora da modal-box
+      // Fecha modal ao clicar fora da caixa
       modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          closeShareModal();
-        }
+        if (e.target === modal) closeShareModal();
       });
 
-      // Abrir modal ao clicar nos botões ⋯
+      // Aqui está o pulo do gato:
+      // Detecta os botões ⋯ e abre o modal com os dados do consultor correto
       document.querySelectorAll('.menu-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
 
-          const item = btn.closest('.consultor');
-          if (!item) return;
+          const consultorEl = btn.closest('.consultor');
+          if (!consultorEl) return;
 
-          const link = item.dataset.link || '';
-          const whatsapp = item.dataset.whatsapp || '';
-          const instagram = item.dataset.instagram || '';
-          const name = item.dataset.name || '';
+          const link = consultorEl.dataset.link || '';
+          const whatsapp = consultorEl.dataset.whatsapp || '';
+          const instagram = consultorEl.dataset.instagram || '';
+          const name = consultorEl.dataset.name || '';
 
           openShareModal({ link, whatsapp, instagram, name });
         });
