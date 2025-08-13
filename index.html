@@ -269,61 +269,59 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode-styling@1.5.0/lib/qrcode.min.js"></script>
   
   <script>
-    let qrCode;
+  let qrCode;
 
-    function openShareModal({ link, whatsapp, instagram, name }) {
-      const modal = document.getElementById('shareModal');
-      document.getElementById('modalLinkInput').value = link;
-      document.getElementById('modalName').textContent = name || '';
+  function openShareModal({ link, whatsapp, instagram, name }) {
+    const modal = document.getElementById('shareModal');
+    document.getElementById('modalLinkInput').value = link;
+    document.getElementById('modalName').textContent = name || '';
 
-      const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '') : '#';
-      const instaHref = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
-      document.getElementById('modalWhatsapp').href = waHref;
-      document.getElementById('modalInsta').href = instaHref;
+    const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g, '') : '#';
+    const instaHref = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
+    document.getElementById('modalWhatsapp').href = waHref;
+    document.getElementById('modalInsta').href = instaHref;
 
-      // Limpa QR antigo
-      const qrContainer = document.getElementById('qrCodeContainer');
-      qrContainer.innerHTML = '';
+    const qrContainer = document.getElementById('qrCodeContainer');
+    qrContainer.innerHTML = '';
 
-      // Cria QR estilizado
-      qrCode = new QRCodeStyling({
-        width: 180,
-        height: 180,
-        data: link.trim(),
-        image: "", // Pode adicionar logo aqui, se quiser
-        dotsOptions: {
-          color: "#6a85ff",
-          type: "rounded"
-        },
-        backgroundOptions: {
-          color: "#f9f9f9"
-        },
-        cornersSquareOptions: {
-          color: "#7960ff",
-          type: "extra-rounded"
-        },
-        cornersDotOptions: {
-          color: "#7960ff",
-          type: "dot"
-        },
-      });
+    qrCode = new QRCodeStyling({
+      width: 180,
+      height: 180,
+      data: link.trim(),
+      image: "",
+      dotsOptions: {
+        color: "#6a85ff",
+        type: "rounded"
+      },
+      backgroundOptions: {
+        color: "#f9f9f9"
+      },
+      cornersSquareOptions: {
+        color: "#7960ff",
+        type: "extra-rounded"
+      },
+      cornersDotOptions: {
+        color: "#7960ff",
+        type: "dot"
+      },
+    });
 
-      qrCode.append(qrContainer);
+    qrCode.append(qrContainer);
 
-      // Evento para download
-      const btnDownload = document.getElementById('downloadQr');
-      btnDownload.onclick = () => qrCode.download({ extension: "png" });
+    const btnDownload = document.getElementById('downloadQr');
+    btnDownload.onclick = () => qrCode.download({ extension: "png" });
 
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden', 'false');
-    }
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+  }
 
-    function closeShareModal() {
-      const modal = document.getElementById('shareModal');
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden', 'true');
-    }
+  function closeShareModal() {
+    const modal = document.getElementById('shareModal');
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+  }
 
+  document.addEventListener('DOMContentLoaded', function () {
     // Copiar link
     document.getElementById('copyBtn').addEventListener('click', async function () {
       const val = document.getElementById('modalLinkInput').value;
@@ -345,20 +343,20 @@
       if (e.key === 'Escape') closeShareModal();
     });
 
-    // Botão abrir modal nos consultores com opções
-    document.querySelectorAll('.consultor').forEach(item => {
-      const btn = item.querySelector('.menu-btn');
-      if (btn) {
-        btn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          const link = item.dataset.link || window.location.href;
-          const whatsapp = item.dataset.whatsapp || '';
-          const instagram = item.dataset.instagram || '';
-          const name = item.dataset.name || '';
-          openShareModal({ link, whatsapp, instagram, name });
-        });
-      }
+    // Ativar botões de três pontinhos
+    document.querySelectorAll('.consultor .menu-btn').forEach(btn => {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const item = btn.closest('.consultor');
+        const link = item.dataset.link || window.location.href;
+        const whatsapp = item.dataset.whatsapp || '';
+        const instagram = item.dataset.instagram || '';
+        const name = item.dataset.name || '';
+        openShareModal({ link, whatsapp, instagram, name });
+      });
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
