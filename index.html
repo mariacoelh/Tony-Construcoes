@@ -250,74 +250,76 @@
     </div>
   </div>
 
-    <script>
-    function openShareModal({ link, whatsapp, instagram, name }) {
-      const modal = document.getElementById('shareModal');
-      document.getElementById('modalLinkInput').value = link;
-      document.getElementById('modalName').textContent = name || '';
+<script>
+  function openShareModal({ link, whatsapp, instagram, name }) {
+    const modal = document.getElementById('shareModal');
+    document.getElementById('modalLinkInput').value = link;
+    document.getElementById('modalName').textContent = name || '';
 
-      // Links
-      const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g,'') : '#';
-      const instaHref = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
-      document.getElementById('modalWhatsapp').href = waHref;
-      document.getElementById('modalInsta').href = instaHref;
+    // Links para WhatsApp e Instagram
+    const waHref = whatsapp ? 'https://wa.me/' + whatsapp.replace(/[^0-9]/g,'') : '#';
+    const instaHref = instagram ? 'https://instagram.com/' + instagram.replace(/^@/, '') : '#';
+    document.getElementById('modalWhatsapp').href = waHref;
+    document.getElementById('modalInsta').href = instaHref;
 
-      // QR Code
-      const cleanedLink = encodeURIComponent(link.trim());
-      const qrSrc = `https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=${cleanedLink}`;
-      const qrImg = document.getElementById('modalQrImg');
-      qrImg.src = qrSrc;
-      qrImg.alt = 'QR Code';
-      qrImg.onerror = () => {
-        qrImg.src = 'https://via.placeholder.com/240?text=Erro+QR';
-      };
-      document.getElementById('downloadQr').href = qrSrc;
-      document.getElementById('downloadQr').setAttribute('download', 'qrcode.png');
+    // Gerar QR Code (com URL encoded)
+    const encodedLink = encodeURIComponent(link.trim());
+    const qrSrc = `https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl=${encodedLink}`;
+    const qrImg = document.getElementById('modalQrImg');
+    qrImg.src = qrSrc;
+    qrImg.alt = 'QR Code para ' + link;
 
-      // Mostrar modal
-      modal.classList.add('show');
-      modal.setAttribute('aria-hidden', 'false');
+    // Atualizar link de download para baixar QR Code
+    const downloadLink = document.getElementById('downloadQr');
+    downloadLink.href = qrSrc;
+    downloadLink.setAttribute('download', 'qrcode.png');
+
+    // Mostrar modal
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeShareModal() {
+    const modal = document.getElementById('shareModal');
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  // Eventos do modal
+  document.getElementById('copyBtn').addEventListener('click', async function () {
+    const val = document.getElementById('modalLinkInput').value;
+    try {
+      await navigator.clipboard.writeText(val);
+      this.textContent = 'Copiado';
+      setTimeout(() => this.textContent = 'Copiar', 1200);
+    } catch {
+      alert('Não foi possível copiar.');
     }
+  });
 
-    function closeShareModal() {
-      const modal = document.getElementById('shareModal');
-      modal.classList.remove('show');
-      modal.setAttribute('aria-hidden', 'true');
+  document.getElementById('closeModal').addEventListener('click', closeShareModal);
+  document.getElementById('shareModal').addEventListener('click', function (e) {
+    if (e.target === this) closeShareModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeShareModal();
+  });
+
+  // Ativar os botões de três pontinhos para abrir o modal
+  document.querySelectorAll('.consultor').forEach(item => {
+    const btn = item.querySelector('.menu-btn');
+    if (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        const link = item.dataset.link || window.location.href;
+        const whatsapp = item.dataset.whatsapp || '';
+        const instagram = item.dataset.instagram || '';
+        const name = item.dataset.name || '';
+        openShareModal({ link, whatsapp, instagram, name });
+      });
     }
+  });
+</script>
 
-    document.getElementById('copyBtn').addEventListener('click', async function () {
-      const val = document.getElementById('modalLinkInput').value;
-      try {
-        await navigator.clipboard.writeText(val);
-        this.textContent = 'Copiado';
-        setTimeout(() => this.textContent = 'Copiar', 1200);
-      } catch {
-        alert('Não foi possível copiar.');
-      }
-    });
-
-    document.getElementById('closeModal').addEventListener('click', closeShareModal);
-    document.getElementById('shareModal').addEventListener('click', function (e) {
-      if (e.target === this) closeShareModal();
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeShareModal();
-    });
-
-    // Ligar botões de 3 pontinhos
-    document.querySelectorAll('.consultor').forEach(item => {
-      const btn = item.querySelector('.menu-btn');
-      if (btn) {
-        btn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          const link = item.dataset.link || window.location.href;
-          const whatsapp = item.dataset.whatsapp || '';
-          const instagram = item.dataset.instagram || '';
-          const name = item.dataset.name || '';
-          openShareModal({ link, whatsapp, instagram, name });
-        });
-      }
-    });
-  </script>
 </body>
 </html>
